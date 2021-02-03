@@ -8,12 +8,12 @@ export default function NavBar() {
                 <li className="nav-item">
                     <Link to="/" className="nav-link">Books</Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <Link to="/" className="nav-link">Tech news</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/" className="nav-link">Aow</Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                     <Link to="/" className="nav-link">Tv series</Link>
                 </li>

@@ -36,14 +36,20 @@ export default function Category(props) {
                 </div>
                 <div className="card-section" onClick={props.quickViewFn}>
                     <Swiper spaceBetween={72} slidesPerView={5} navigation pagination={{clickable: true}} breakpoints={{
-                        800: {
+                        1300: {
+                            slidesPerView: 5
+                        },
+                        1050: {
                             slidesPerView: 4
+                        },
+                        850: {
+                            slidesPerView: 3
                         },
                         768 : {
                             slidesPerView: 3
                         },
                         730 : {
-                            slidesPerView: 3
+                            slidesPerView: 3,
                         },
                         600: {
                             slidesPerView: 2

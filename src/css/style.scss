@@ -63,7 +63,7 @@ header {
         justify-content: space-between;
         .logo {
             img {
-                width: 125px;
+                width: 100px;
                 height: auto;
                 object-fit: contain;
             }
@@ -105,12 +105,12 @@ nav {
 .menu-btn {
     border: none;
     width: 40px;
-    border: 1px solid $light;
     border-radius: 5px;
     @include flexRow;
     justify-content: center;
     color: $light;
     display: none;
+    font-size: 1.25rem;
 }
 // jumbotron
 .jumbotron {
@@ -192,6 +192,7 @@ nav {
 .card {
     width: 200px;
     cursor: pointer;
+    margin: auto;
     &-image {
         width: 100%;
         margin: 2rem 0 12px;
@@ -225,6 +226,7 @@ nav {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    top: 42%;
     &:after {
         font-size: 0.9rem;
         color: $light;
@@ -232,7 +234,7 @@ nav {
     }
 }
 .swiper-button-next {
-    right: 30px;
+    right: 40px;
 }
 .swiper-button-prev {
     left: 40px;
@@ -322,7 +324,72 @@ nav {
     }
 }
 
+// side-nav
+.side-nav {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(100vh - 77px);
+    background: $dark;
+    z-index: 2;
+    transition: all 0.3s ease;
+    transform: translateX(100%);
+    nav {
+        display: block;
+        padding: 3rem 0 0;
+        .nav-list {
+            flex-direction: column;
+            .nav-item {
+                padding: 0 0 2.5rem;
+                .nav-link {
+                    padding: 0.5rem;
+                }
+            }
+        }
+    }
+}
+.toggle-menu {
+    transform: translateX(0);
+}
+
 // media - responsive
+@media (min-width: 769px) and (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding: 0 3rem;
+    }
+    .category {
+        .container {
+            max-width: 100%;
+            padding: 0;
+            .title-section {
+                padding: 0 3rem;
+            }
+            .card-section {
+                padding: 0;
+            }
+        }
+    }
+    .swiper-container {
+        padding: 0 5rem;
+    }
+    .content-lay {
+        max-height: 700px;
+        overflow: scroll;
+        margin-bottom: 3rem;
+        padding-top: 3rem;
+        padding-bottom: 0;
+    }
+    .quick-view {
+        padding: 0 3rem;
+        &-content {
+            max-width: 100%;
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         max-width: 100%;
@@ -335,7 +402,7 @@ nav {
         display: flex;
     }
     .jumbotron {
-        height: 80vh;
+        height: 700px;
         .container {
             .content {
                 flex-direction: column;
@@ -372,12 +439,12 @@ nav {
         padding: 0 3rem;
     }
     .swiper-button-next {
-        right: 20px;
-        display: none;
+        right: 10px;
+        // display: none;
     }
     .swiper-button-prev {
         left: 10px;
-        display: none;
+        // display: none;
     }
     .content-lay {
         flex-direction: column;
@@ -407,6 +474,16 @@ nav {
 }
 
 @media (max-width: 600px) {
+    header {
+        .container {
+            height: 75px;
+            .logo {
+                img {
+                    width: 100px;
+                }
+            }
+        }
+    }
     .content-lay {
         max-height: 500px;
         .content-left {
