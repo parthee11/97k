@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap');
+
+// color
+$primary: #FBFF49;
+$light: #FFFFFF;
+$dark: #000000;
+
+// typography
+%-fontFam {
+    font-family: 'Jost', sans-serif;
+}
+
+// mixins
+// typography
+@mixin fontBold {
+    @extend %-fontFam;
+    font-weight: 700;
+}
+@mixin fontRegular {
+    @extend %-fontFam;
+    font-weight: 400;
+}
+@mixin fontLight {
+    @extend %-fontFam;
+    font-weight: 300;
+}
+
+@mixin textUpper {
+    text-transform: uppercase;
+}
+@mixin textCapitalize {
+    text-transform: capitalize;
+}
+
+// link
+@mixin link {
+    text-decoration: underline;
+    color: $primary;
+}
+@mixin unlink {
+    text-decoration: none;
+    color: $light;
+}
+
+// flex
+@mixin flexRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+// buttons
+%-btn {
+    height: 40px;
+    @include flexRow;
+    font-size: 1rem;
+    cursor: pointer;
+    background: none;
+}
+
+// transition
+@mixin transition3s {
+    transition: all 0.3s ease;
+}
