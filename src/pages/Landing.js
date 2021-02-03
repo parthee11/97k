@@ -48,7 +48,18 @@ export default function Landing() {
     }
 
     const sideMenuHandler = (e) => {
+        let targetChild = e.target.children[0];
+
+        if(targetChild.classList.contains('lni-menu')) {
+            targetChild.classList.remove('lni-menu');
+            targetChild.classList.add('lni-close');
+        } else {
+            targetChild.classList.add('lni-menu');
+            targetChild.classList.add('lni-close');
+        };
+
         sideMenuRef.current.classList.toggle('toggle-menu');
+        
         sideMenuRef.current.classList.contains('toggle-menu') ? 
         document.body.style.overflowY = 'hidden' :
         document.body.style.overflowY = 'scroll';

@@ -111,6 +111,9 @@ nav {
     color: $light;
     display: none;
     font-size: 1.25rem;
+    i {
+        pointer-events: none;
+    }
 }
 // jumbotron
 .jumbotron {
