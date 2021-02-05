@@ -1,27 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-export default function NavBar() {
+export default function NavBar({navRef, navClose}) {
     return (
-        <nav>
+        <nav ref={navRef} onClick={navClose} >
             <ul className="nav-list">
                 <li className="nav-item">
-                    <Link to="/" className="nav-link">Books</Link>
+                    <NavLink to="/books" className="nav-link" activeClassName="nav-link-active" >Books</NavLink>
                 </li>
                 {/* <li className="nav-item">
-                    <Link to="/" className="nav-link">Tech news</Link>
+                    <NavLink to="/" className="nav-link" activeClassName="nav-link-active">Tech news</NavLink>
                 </li>
                 <li className="nav-item">
-                    <Link to="/" className="nav-link">Aow</Link>
+                    <NavLink to="/" className="nav-link" activeClassName="nav-link-active">Aow</NavLink>
                 </li> */}
                 <li className="nav-item">
-                    <Link to="/" className="nav-link">Tv series</Link>
+                    <NavLink to="/movies" className="nav-link" activeClassName="nav-link-active">Movies</NavLink>
                 </li>
                 <li className="nav-item">
-                    <Link to="/" className="nav-link">Movies</Link>
+                    <NavLink to="/tvSeries" className="nav-link" activeClassName="nav-link-active">Tv series</NavLink>
                 </li>
                 <li className="nav-item">
-                    <Link to="/" className="nav-link">Podcasts</Link>
+                    <NavLink to="/podcasts" className="nav-link" activeClassName="nav-link-active">Podcasts</NavLink>
                 </li>
             </ul>
         </nav>

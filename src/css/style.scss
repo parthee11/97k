@@ -101,6 +101,11 @@ nav {
                     }
                 }
             }
+            .nav-link-active {
+                &:after {
+                    opacity: 1;
+                }
+            }
         }
     }
 }
@@ -334,6 +339,7 @@ nav {
         }
     }
 }
+
 // quick view
 .quick-view {
     position: fixed;
@@ -385,6 +391,75 @@ nav {
 .toggle-menu {
     transform: translateX(0);
 }
+
+// banner
+.banner {
+    height: 300px;
+    @include flexRow;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: -2;
+    &::before {
+        content: '';
+        background: rgba($color: $dark, $alpha: 0.75);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .container {
+        z-index: 0;
+        .title {
+            h2 {
+                font-size: 3rem;
+            }
+            p {
+                max-width: 550px;
+            }
+        }
+    }
+}
+
+#banner-book {
+    background: url('../assets/books_banner.jpg') no-repeat center center/cover;
+}
+
+#banner-movie {
+    background: url('../assets/movies_banner.jpg') no-repeat center center/cover;
+}
+
+#banner-tv {
+    background: url('../assets/tv_banner.jpg') no-repeat center center/cover;
+}
+
+#banner-podcast {
+    background: url('../assets/podcast_banner.jpg') no-repeat center center/cover;
+}
+
+// back home
+.back-to-home {
+    display: block;
+    margin: 2rem 0;
+    color: $light;
+    text-decoration: none;
+}
+
+//category page
+.category-list {
+    .list-item {
+        border-bottom: 1px solid rgba($color: $light, $alpha: 0.75);
+        &:last-child {
+            border-bottom: none;
+        }
+        .content-lay {
+            max-width: 1200px;
+        }
+    }
+} 
 
 // media - responsive
 @media (min-width: 769px) and (max-width: 1200px) {

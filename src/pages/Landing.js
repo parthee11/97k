@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { client } from '../Client'
 import Category from '../components/Category'
-import Header from '../components/Header'
 import Jumbotron from '../components/Jumbotron'
 import QuickView from '../components/QuickView'
-import SideNav from '../components/SideNav'
 
 
-export default function Landing() {
+export default function Landing({sideMenuFn, sideMenu}) {
     
     const [books, setBooks] = useState([])
     const [movies, setMovies] = useState([])
     const [tvSeries, setTvSeries] = useState([])
     const [podcasts, setPodcasts] = useState([])
     const [quickViewData, setQuickViewData] = useState();
-    const sideMenuRef = useRef();
 
     const getDataEntries = (contentType, category, setData) => {
         client.getEntries({content_type: contentType})
@@ -58,27 +55,8 @@ export default function Landing() {
         }
     }
 
-    const sideMenuHandler = (e) => {
-        let targetChild = e.target.children[0];
-
-        if(targetChild.classList.contains('lni-menu')) {
-            targetChild.classList.remove('lni-menu');
-            targetChild.classList.add('lni-close');
-        } else {
-            targetChild.classList.add('lni-menu');
-            targetChild.classList.add('lni-close');
-        };
-
-        sideMenuRef.current.classList.toggle('toggle-menu');
-        
-        sideMenuRef.current.classList.contains('toggle-menu') ? 
-        document.body.style.overflowY = 'hidden' :
-        document.body.style.overflowY = 'scroll';
-    }
-
     return (
         <React.Fragment>
-            <Header sideMenuFn={sideMenuHandler} />
             <Jumbotron />
 
             <Category categoryId="books" categoryName="books" categoryLink="/books" categoryData={books} quickViewFn={quickViewHandler} />
@@ -89,7 +67,6 @@ export default function Landing() {
             {
                 !(quickViewData === undefined) && <QuickView data={quickViewData} />
             }
-            <SideNav sideMenu={sideMenuRef} />
         </React.Fragment>
     )
 }
