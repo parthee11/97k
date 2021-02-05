@@ -14,16 +14,24 @@ SwiperCore.use([Navigation, Pagination])
 export default function Category(props) {
 
     const categoryData = props.categoryData.map(data => {
-        const id = data.sys.id;
-        const imageSrc = data.fields.image.fields.file.url;
+        const id = data.sys.id
         const title = data.fields.title;
-        const rating = data.fields.rating;
-        const ratingBy = data.fields.ratingBy;
-        return (
-            {
-                id, imageSrc, title, rating, ratingBy
-            }
-        );
+        const details = data.fields.details;
+        const description = data.fields.description;
+        const available = data.fields.available;
+        const image = data.fields.image.fields.file.url;
+        const imageAlt = data.fields.image.fields.title;
+        let trailer;
+        let rating;
+        if(data.fields.trailer) {
+            trailer = data.fields.trailer;
+        }
+        if(data.fields.ratingValue) {
+            rating = [data.fields.ratingValue, data.fields.ratingBy];
+        }
+        return {
+            id, title, details, description, available, image, imageAlt, trailer, rating
+        }
     });
 
     return (
@@ -64,7 +72,7 @@ export default function Category(props) {
                         {
                             categoryData.map(data => (
                                 <SwiperSlide key={data.id}>
-                                    <Card id={data.id} image={data.imageSrc} altImage={data.title} title={data.title} rating={data.rating} rateBy={data.ratingBy}  />
+                                    <Card content={data} />
                                 </SwiperSlide>
                             ))
                         }                        

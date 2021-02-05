@@ -10,16 +10,26 @@ import SideNav from '../components/SideNav'
 export default function Landing() {
     
     const [books, setBooks] = useState([])
+    const [movies, setMovies] = useState([])
+    const [tvSeries, setTvSeries] = useState([])
+    const [podcasts, setPodcasts] = useState([])
     const [quickViewData, setQuickViewData] = useState();
     const sideMenuRef = useRef();
+
+    const getDataEntries = (contentType, category, setData) => {
+        client.getEntries({content_type: contentType})
+        .then(res => localStorage.setItem(category, JSON.stringify(res.items)))
+        .then(() => setData(JSON.parse(localStorage.getItem(category))))
+        .catch(err => console.log(err));
+    }
     
     useEffect(() => {
-        client.getEntries({
-            content_type: 'books97k'
-        })
-            .then(res => localStorage.setItem('books', JSON.stringify(res.items)))
-            .then(() => setBooks(JSON.parse(localStorage.getItem('books'))))
-            .catch(err => console.log(err));
+
+        getDataEntries('books', 'books', setBooks)
+        getDataEntries('movies', 'movies', setMovies)
+        getDataEntries('tvSeries', 'tvSeries', setTvSeries)
+        getDataEntries('podcasts', 'podcasts', setPodcasts)
+
     }, [])
 
     const getLSData = (categoryName) => {
@@ -31,6 +41,7 @@ export default function Landing() {
             let dataId = e.target.dataset.id;
             let categoryId = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
             let lsData = getLSData(categoryId);
+
             lsData.forEach(data => {
                 let id = data.sys.id;
                 if(dataId === id) {
@@ -69,7 +80,12 @@ export default function Landing() {
         <React.Fragment>
             <Header sideMenuFn={sideMenuHandler} />
             <Jumbotron />
+
             <Category categoryId="books" categoryName="books" categoryLink="/books" categoryData={books} quickViewFn={quickViewHandler} />
+            <Category categoryId="movies" categoryName="movies" categoryLink="/movies" categoryData={movies} quickViewFn={quickViewHandler} />
+            <Category categoryId="tvSeries" categoryName="tvSeries" categoryLink="/tvSeries" categoryData={tvSeries} quickViewFn={quickViewHandler} />
+            <Category categoryId="podcasts" categoryName="podcasts" categoryLink="/podcasts" categoryData={podcasts} quickViewFn={quickViewHandler} />
+
             {
                 !(quickViewData === undefined) && <QuickView data={quickViewData} />
             }

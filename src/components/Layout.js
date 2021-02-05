@@ -1,67 +1,107 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Layout(props) {
+export default function Layout({data}) {
+
+    const trailerRef = useRef();
     
-    const image = props.data.fields.image.fields.file.url;
-    const title = props.data.fields.title;
-    const rating = props.data.fields.rating;
-    const rateBy = props.data.fields.ratingBy;
-    const author = props.data.fields.author;
-    const genre = props.data.fields.genre;
-    const pubDate = props.data.fields.published;
-    const summary = props.data.fields.summary;
-    const links = props.data.fields.links;
+    const title = data.fields.title;
+    const details = data.fields.details.details;
+    const description = data.fields.description;
+    const available = data.fields.available.available;
+    const image = data.fields.image.fields.file.url;
+    const imageAlt = data.fields.image.fields.title;
+    let trailer;
+    let rating;
+    if(data.fields.trailer) {
+        trailer = [data.fields.trailer];
+    } else {
+        trailer = undefined;
+    }
+    if(data.fields.ratingValue) {
+        rating = [data.fields.ratingValue, data.fields.ratingBy];
+    } else {
+        rating = undefined;
+    }
+
+    useEffect(() => {
+        
+        if(trailer !== undefined) {
+            trailerRef.current.innerHTML = `
+                <a href=${trailer} target="_blank" class="trailer-link">
+                    <span>Watch Trailer</span>
+                </a>
+            `;
+        } else {
+            trailerRef.current.innerHTML = '';
+        }
+
+    }, [trailer]);
 
     const externalLinkHandler = (url) => {
         window.open(url, '_blank')
     }
-
-    const linksUI = () => (
-        <div className="links-list">
-            {
-                (links.amazon.length > 1) ? <Link to="/" className="link" onClick={() => externalLinkHandler(`${links.amazon[1]}`)} >{links.amazon[0]}</Link> : <span>{links.amazon[0]}</span>
-            }&nbsp;,&nbsp;
-            {
-                (links.google.length > 1) ? <Link to="/" className="link" onClick={() => externalLinkHandler(`${links.google[1]}`)}>{links.google[0]}</Link> : <span>{links.google[0]}</span>
-            }&nbsp;&&nbsp;
-            {
-                (links.zLibrary.length > 1) ? <Link to="/" className="link" onClick={() => externalLinkHandler(`${links.zLibrary[1]}`)}>{links.zLibrary[0]}</Link> : <span>{links.zLibrary[0]}</span>
-            }
-        </div>
-    );
     
     return (
         <React.Fragment>
             <div className="content-lay">
                 <div className="content-left">
                     <div className="image">
-                        <img src={image} alt={title} />
+                        <img src={image} alt={imageAlt} />
                     </div>
                 </div>
                 <div className="content-right">
                     <h2 className="title">{title}</h2>
-                    <div className="rating-section">
-                        <div className="rating">
-                            <i className="lni lni-star-filled"></i>
-                            <span>{rating}</span>
-                        </div>
-                        <div className="rate-by">
-                            ({rateBy})
-                        </div>
-                    </div>
+                    {/* rating section */}
+                    {
+                        (rating !== undefined)
+                        &&
+                        (
+                            <div className="rating-section">
+                                <div className="rating">
+                                    <i className="lni lni-star-filled"></i>
+                                    <span>{rating[0]}</span>
+                                </div>
+                                <div className="rate-by">
+                                    ({rating[1]})
+                                </div>
+                            </div>
+                        )
+                    }
+                    {/* details section */}
                     <div className="details">
-                        <div className="author"><span>Author : </span>{author}</div>
-                        <div className="genre"><span>Genre : </span>{genre}</div>
-                        <div className="pub-date"><span>Pulished : </span>{pubDate}</div>
+                        {
+                            details.map((detail, index) => {
+                                return (
+                                    <div className={detail.title} key={index}><span>{detail.title}: </span>{detail.value}</div>
+                                )
+                            })
+                        }
                     </div>
                     <div className="summary-desc">
-                        <div><span>Summary : </span></div>
-                        <p>{summary}</p>
+                        <div><span>Summary: </span></div>
+                        <p>{description}</p>
                     </div>
+                    {/* available */}
                     <div className="available-links">
-                        <div><span>Available : </span></div>
-                        {linksUI()}
+                        <div className="links-list">
+                            <span>Available:</span>
+                            {
+                                available.map((avail, index) => {
+                                    return (
+                                        <span key={index}>
+                                            {
+                                                (avail.url !== undefined) ?  <Link to="/" className="link" onClick={() => externalLinkHandler(`${avail.url}`)} key={index} >{avail.title}</Link> : avail.title
+                                            }
+                                        </span>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    {/* embed video */}
+                    <div className="trailer" ref={trailerRef}>
+                        {/* dynamic load */}
                     </div>
                 </div>
             </div>

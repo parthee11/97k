@@ -19,7 +19,7 @@ h1, h2 { @include textUpper; }
 
 // utilities
 .container {
-    max-width: 1240px;
+    max-width: 1560px;
     margin: auto;
 }
 .btn {
@@ -36,7 +36,8 @@ h1, h2 { @include textUpper; }
     color: $light;
 }
 .rate-by {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
+    @include textCapitalize;
 }
 .rating {
     font-size: 0.85rem;
@@ -44,9 +45,10 @@ h1, h2 { @include textUpper; }
 }
 .rating-section {
     @include flexRow;
+    align-items: flex-end;
     margin-top: 0.2rem;
     .rating {
-        margin-right: 0.5rem;
+        margin-right: 0.3rem;
         i {
             color: $primary;
             margin-right: 0.2rem;
@@ -182,7 +184,7 @@ nav {
         max-width: calc(100vw - 2rem);
         .title-section {
             @include flexRow;
-            max-width: 1240px;
+            max-width: 1560px;
             margin: auto;
         }
         .card-section {
@@ -268,7 +270,8 @@ nav {
     }
     .content-right {
         width: 70%;
-        padding: 0 2rem 0 0;
+        padding: 0 3rem 0 0;
+        position: relative;
         div {
             span {
                 @include fontBold;
@@ -276,31 +279,57 @@ nav {
         }
         .title {
             margin-bottom: 1rem;
+            @include textCapitalize;
         }
         .rating-section {
             margin-top: 0;
         }
         .details {
             @include flexRow;
-            margin: 1rem 0 1.5rem;
-            .genre {
-                margin: 0 2rem;
+            margin: 1rem 0;
+            @include textCapitalize;
+            div {
+                margin-right: 3rem;
+                &:last-child {
+                    margin-right: 0;
+                }
             }
         }
         .summary-desc {
             margin: 0 0 1.5rem;
+            p {
+                padding-top: 0.35rem
+            }
         }
         .available-links {
             @include flexRow;
+            margin-bottom: 1rem;
             .links-list {
-                margin-left: 0.3rem; 
-                @include textCapitalize;
-                .link {
-                    @include link;
-                }  
                 span {
                     @include fontRegular;
+                    @include textCapitalize;
+                    margin-left: 1rem;
+                    &:first-child {
+                        @include fontBold;
+                        margin-left: 0;
+                    }
+                    .link {
+                        color: $primary;
+                    }
                 }
+            }
+        }
+        .trailer {
+            display: inline;
+            position: absolute;
+            right: 3rem;
+            bottom: 1rem;
+            .trailer-link {
+                padding: 0.5rem 1rem;
+                background: red;
+                border-radius: 5px;
+                text-decoration: none;
+                color: $light;
             }
         }
     }
