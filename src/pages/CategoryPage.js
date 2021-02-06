@@ -29,7 +29,7 @@ export default function CategoryPage({ id, categoryName, categoryData, categoryQ
                 </Link>
                 <ul className="category-list">
                     {
-                        categoryData !== undefined && (
+                        (categoryData !== null) && (
                             categoryData.map(data => (
                                 <li className="list-item" key={data.sys.id}>
                                     <Layout data={data} />
