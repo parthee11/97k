@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 
 export default function CategoryPage({ id, categoryName, categoryData, categoryQuote }) {
 
-    console.log(categoryData)
+    // console.log(categoryData)
 
     return (
         <React.Fragment>

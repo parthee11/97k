@@ -11,8 +11,21 @@ import { client } from './Client';
 export default function App() {
 
     const [quotes, setQuotes] = useState();
+    const [books, setBooks] = useState([])
+    const [movies, setMovies] = useState([])
+    const [tvSeries, setTvSeries] = useState([])
+    const [podcasts, setPodcasts] = useState([])
+    const [quickViewData, setQuickViewData] = useState();
+
+    const getDataEntries = (contentType, category, setData) => {
+        client.getEntries({content_type: contentType})
+        .then(res => localStorage.setItem(category, JSON.stringify(res.items)))
+        .then(() => setData(JSON.parse(localStorage.getItem(category))))
+        .catch(err => err);
+    }
 
     useEffect(() => {
+
         client.getEntries({
             content_type: "quotes"
         })
@@ -23,16 +36,52 @@ export default function App() {
                 setQuotes(JSON.parse(localStorage.getItem('quotes')))
             ))
             .catch(err => err)
+
+        
+        getDataEntries('books', 'books', setBooks)
+        getDataEntries('movies', 'movies', setMovies)
+        getDataEntries('tvSeries', 'tvSeries', setTvSeries)
+        getDataEntries('podcasts', 'podcasts', setPodcasts)    
+
     }, [])
 
-    const setCategoryDataHandler = (lsKey) => {
-        return JSON.parse(localStorage.getItem(lsKey))
+    let bookQ;
+    let movieQ;
+    let tvQ;
+    let podcastQ;
+
+    if(quotes !== undefined) {
+        bookQ = quotes.book;
+        movieQ = quotes.movie;
+        tvQ = quotes.tvSeries;
+        podcastQ = quotes.podcast;
     }
 
-    const books = setCategoryDataHandler('books');
-    const movies = setCategoryDataHandler('movies');
-    const tvSeries = setCategoryDataHandler('tvSeries');
-    const podcasts = setCategoryDataHandler('podcasts');
+    const getLSData = (categoryName) => {
+        return JSON.parse(localStorage.getItem(categoryName));
+    }
+
+    const quickViewHandler = (e) => {
+        if(e.target.classList.contains('card')) {
+            let dataId = e.target.dataset.id;
+            let categoryId = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+            let lsData = getLSData(categoryId);
+
+            lsData.forEach(data => {
+                let id = data.sys.id;
+                if(dataId === id) {
+                    setQuickViewData(data);
+                }
+
+                // checking if quick view is present in the DOM, if not available (null), we do nothing, if available, we display:flex it.
+                
+                let quickViewUI = document.querySelector('.quick-view');
+                if(!(quickViewUI === null)) {
+                    quickViewUI.style.display = 'flex';
+                }
+            })
+        }
+    }
 
     const sideMenuRef = useRef();
 
@@ -53,18 +102,6 @@ export default function App() {
         document.body.style.overflowY = 'hidden' :
         document.body.style.overflowY = 'scroll';
     }
-
-    let bookQ;
-    let movieQ;
-    let tvQ;
-    let podcastQ;
-
-    if(quotes !== undefined) {
-        bookQ = quotes.book;
-        movieQ = quotes.movie;
-        tvQ = quotes.tvSeries;
-        podcastQ = quotes.podcast;
-    }
     
     return (
         <React.Fragment>
@@ -83,7 +120,9 @@ export default function App() {
                     <Route path='/podcasts' >
                         <CategoryPage id="banner-podcast" categoryName="podcasts" categoryData={podcasts} categoryQuote={podcastQ} />
                     </Route>
-                    <Route exact path='/' component={Landing} ></Route>
+                    <Route exact path='/'>
+                        <Landing booksData={books} moviesData={movies} tvSeriesData={tvSeries} podcastsData={podcasts} qViewData={quickViewData} quickViewFn={quickViewHandler} />
+                    </Route>
                 </Switch>
                 <SideNav sideMenu={sideMenuRef}/>
                 <Footer />
