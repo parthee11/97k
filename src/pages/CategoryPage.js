@@ -2,15 +2,22 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 
-export default function CategoryPage({ id, categoryName, categoryData }) {
-    
+export default function CategoryPage({ id, categoryName, categoryData, categoryQuote }) {
+
     return (
         <React.Fragment>
             <div className="banner" id={id}>
                 <div className="container">
                     <div className="title">
                         <h2>{categoryName}</h2>
-                        <p>( Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae ipsum velit deleniti nostrum iure tempore sint blanditiis error, inventore sapiente! )</p>
+                        {
+                            categoryQuote !== undefined && (
+                                <p>
+                                    <span className="fav-quote">"{categoryQuote.quote}"</span>
+                                    <span>-&nbsp;&nbsp;{categoryQuote.from}</span>
+                                </p>
+                            )
+                        }
                     </div>
                 </div>
             </div>

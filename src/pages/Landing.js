@@ -17,7 +17,7 @@ export default function Landing({sideMenuFn, sideMenu}) {
         client.getEntries({content_type: contentType})
         .then(res => localStorage.setItem(category, JSON.stringify(res.items)))
         .then(() => setData(JSON.parse(localStorage.getItem(category))))
-        .catch(err => console.log(err));
+        .catch(err => err);
     }
     
     useEffect(() => {

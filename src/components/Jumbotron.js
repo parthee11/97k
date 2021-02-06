@@ -16,11 +16,14 @@ export default function Jumbotron() {
                             Welcome to <span>97k</span><br/>daily suggestions
                         </h1>
                         <h2>Why to follow?</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, deleniti necessitatibus rem fugiat earum explicabo nesciunt expedita veritatis perspiciatis delectus facere odit in nostrum iste quos eaque dolores doloremque, harum aliquam ipsa. Voluptatum nulla ea autem dolorum a inventore dolorem laboriosam! Reiciendis accusamus in blanditiis natus quod, fuga ipsam provident?</p>
+                        <p>
+                        Ever found something that you thought will be worth your time, only to later regret that you could have found a better one? - Be it Books, Movies, TV Series, Apps (or) Podcasts.<br/><br/> <strong> That's where I come in to ease your search!😉 </strong>
+                        </p>
                     </div>
                     <div className="content-right"></div>
                     <div className="social-media">
                         <div className="sm-icons">
+                            Follow |&nbsp;
                             <Link to="/" className="instagram" onClick={() => externalLinkHandler('https://www.instagram.com')} >
                                 <i className="lni lni-instagram-original"></i>
                             </Link>
